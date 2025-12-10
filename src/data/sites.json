@@ -1,0 +1,29 @@
+[
+  {
+    "slug": "studio-aleph",
+    "name": "סטודיו אלף",
+    "url": "https://studioaleph.co.il",
+    "creator": "רותם לוי",
+    "description": "אתר תדמית נקי שמדגיש טיפוגרפיה ותמונות ברוח ברוטליסטית רכה.",
+    "tags": ["Bricks", "ACF", "WooCommerce"],
+    "thumbnail": "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    "slug": "herzliya-park",
+    "name": "פארק הרצליה",
+    "url": "https://herzliyapark.example",
+    "creator": "ניצן מזרחי",
+    "description": "דף נחיתה צבעוני לפרויקט עירוני עם הדגשת מפה ותמונות רחפן.",
+    "tags": ["Bricks", "JetEngine"],
+    "thumbnail": "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    "slug": "pixel-hummus",
+    "name": "פיקסל חומוס",
+    "url": "https://pixelhummus.example",
+    "creator": "אורן גפן",
+    "description": "מינימליזם בשחור ולבן עם קריאה חזקה לפעולה ומשחקי גריד.",
+    "tags": ["Bricks", "GSAP", "Forminator"],
+    "thumbnail": "https://images.unsplash.com/photo-1489515217757-5fd1be406fef?auto=format&fit=crop&w=800&q=80"
+  }
+]
