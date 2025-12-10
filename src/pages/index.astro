@@ -1,0 +1,46 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { readSites } from '../utils/data';
+
+const sites = await readSites();
+---
+<BaseLayout title="Brutalist Bricks | גלריה" description="גלריה מונוכרומטית לאתרים שנבנו עם Bricks בישראל">
+  <section class="flex flex-col gap-6">
+    <div class="max-w-3xl flex flex-col gap-3 text-sm leading-relaxed">
+      <h1 class="text-2xl font-semibold uppercase">Brutalist Bricks</h1>
+      <p>
+        אתר שמחבר בין בוני אתרים ב-Bricks Builder בישראל. אנחנו חוגגים, מציגים ומתגאים בפרויקטים מקומיים,
+        כדי לשמר גיוון בכלי בנייה בוורדפרס ולעודד יצירתיות חופשית.
+      </p>
+      <p>
+        הגלריה נבנית מסיפורים אמיתיים ומהשראה. בואו להגיש אתר, לקרוא על כלים ולגלות איך ברוטליזם דיגיטלי יכול להיות חד אך אנושי.
+      </p>
+      <a class="link" href="/submit">להגשת אתר חדש →</a>
+    </div>
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      {sites.map((site) => (
+        <article class="card bg-base-100 shadow-md border border-neutral-200" style="min-height: 320px;" id={site.slug}>
+          <figure class="h-48 overflow-hidden bg-neutral">
+            <img src={site.thumbnail} alt={`תמונה של ${site.name}`} class="w-full h-full object-cover" loading="lazy" />
+          </figure>
+          <div class="card-body gap-2">
+            <div class="flex items-center justify-between">
+              <h2 class="card-title text-lg leading-tight">{site.name}</h2>
+              <a class="link text-xs" href={`/sites/${site.slug}`}>צפייה</a>
+            </div>
+            <p class="text-sm text-gray-700 leading-snug">{site.description}</p>
+            <div class="flex flex-wrap gap-2 mt-2">
+              {site.tags?.map((tag) => (
+                <span class="badge badge-outline" aria-label={`תגית ${tag}`}>{tag}</span>
+              ))}
+            </div>
+            <div class="flex items-center justify-between text-xs text-gray-600 mt-2">
+              <span>עיצוב: {site.creator}</span>
+              <a class="link" href={site.url} target="_blank" rel="noreferrer">לאתר</a>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

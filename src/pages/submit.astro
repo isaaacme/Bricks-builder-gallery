@@ -1,0 +1,73 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout title="הגשת אתר חדש">
+  <section class="max-w-2xl space-y-4 text-base leading-relaxed">
+    <h1 class="text-3xl font-semibold uppercase">Submit</h1>
+    <p class="text-sm text-gray-700">
+      טופס מינימלי כדי להוסיף אתר חדש. השדות החיוניים: שם האתר, שם היוצר/ת וה-URL. אפשר להוסיף טקסט קצר ותגיות של כלים/תוספים.
+      הנתונים נשמרים כקובץ JSON ומוזרמים מחדש לגלריה.
+    </p>
+    <form id="submit-form" class="space-y-3 bg-base-100 p-4 rounded-lg shadow-sm border border-neutral-200">
+      <div class="form-control">
+        <label class="label text-sm font-semibold" for="name">שם האתר *</label>
+        <input id="name" name="name" required class="input input-bordered" placeholder="שם הפרויקט" />
+      </div>
+      <div class="form-control">
+        <label class="label text-sm font-semibold" for="creator">שם היוצר/ת *</label>
+        <input id="creator" name="creator" required class="input input-bordered" placeholder="השם שיופיע בגלריה" />
+      </div>
+      <div class="form-control">
+        <label class="label text-sm font-semibold" for="url">קישור *</label>
+        <input id="url" name="url" required class="input input-bordered" placeholder="https://" type="url" />
+      </div>
+      <div class="form-control">
+        <label class="label text-sm font-semibold" for="description">תיאור קצר</label>
+        <textarea id="description" name="description" class="textarea textarea-bordered" rows="3" placeholder="כמה מילים על האתר"></textarea>
+      </div>
+      <div class="form-control">
+        <label class="label text-sm font-semibold" for="tags">תגיות (מופרדות בפסיק)</label>
+        <input id="tags" name="tags" class="input input-bordered" placeholder="Bricks, ACF, WooCommerce" />
+      </div>
+      <button type="submit" class="btn btn-neutral w-full">שליחה</button>
+      <p id="form-status" class="text-sm text-gray-700"></p>
+    </form>
+  </section>
+  <script>
+    const form = document.getElementById('submit-form');
+    const status = document.getElementById('form-status');
+
+    form?.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      status.textContent = 'שומר...';
+      const formData = new FormData(form);
+      const payload = {
+        name: formData.get('name'),
+        creator: formData.get('creator'),
+        url: formData.get('url'),
+        description: formData.get('description'),
+        tags: (formData.get('tags') || '')
+          .toString()
+          .split(',')
+          .map((t) => t.trim())
+          .filter(Boolean)
+      };
+
+      try {
+        const response = await fetch('/api/submit', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        });
+        if (!response.ok) throw new Error('שמירה נכשלה');
+        status.textContent = 'האתר נשמר! הוא יצטרף לגלריה לאחר רענון.';
+        form.reset();
+      } catch (err) {
+        console.error(err);
+        status.textContent = 'אירעה תקלה, נסו שוב או פנו אלינו במייל.';
+      }
+    });
+  </script>
+</BaseLayout>

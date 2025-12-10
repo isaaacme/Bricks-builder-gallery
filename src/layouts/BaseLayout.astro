@@ -1,0 +1,92 @@
+---
+export interface Props {
+  title?: string;
+  description?: string;
+}
+const { title = 'Brutalist Bricks', description } = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="he" dir="rtl" class="bg-base-200">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    {description && <meta name="description" content={description} />}
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@4.10.2/dist/full.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <style>
+      :root {
+        font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      }
+      body {
+        max-width: 1600px;
+        margin: 0 auto;
+        background: #f4f4f4;
+        color: #111;
+      }
+      a {
+        color: #0645ad;
+      }
+      .container-shell {
+        width: 100%;
+        padding: 1.5rem;
+      }
+      @media (min-width: 1024px) {
+        .container-shell {
+          padding: 2.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body class="min-h-screen">
+    <div class="drawer">
+      <input id="menu-drawer" type="checkbox" class="drawer-toggle" />
+      <div class="drawer-content">
+        <header class="container-shell flex items-center justify-between gap-4">
+          <label for="menu-drawer" class="btn btn-ghost btn-square" aria-label="פתח תפריט">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 5.25h16.5M3.75 12h16.5m-16.5 6.75h16.5" />
+            </svg>
+          </label>
+          <div class="flex-1">
+            <a href="/" class="text-xl font-semibold uppercase">Brutalist Bricks</a>
+          </div>
+          <nav class="hidden lg:flex gap-4 text-sm uppercase">
+            <a href="/" class="link">גלריה</a>
+            <a href="/submit" class="link">הגשת אתר</a>
+            <a href="/about" class="link">אודות</a>
+            <a href="/blog" class="link">מאמרים</a>
+          </nav>
+        </header>
+        <main class="container-shell">{Astro.children}</main>
+        <footer class="container-shell flex flex-col gap-2 pb-10 text-sm text-gray-700">
+          <div class="flex flex-wrap gap-3 items-center">
+            <span>בנוי עם Astro + DaisyUI | מונוכרומטי עם נגיעות כחול.</span>
+            <a href="https://bricksbuilder.io" target="_blank" rel="noreferrer" class="link">Bricks Builder</a>
+            <a href="https://github.com" target="_blank" rel="noreferrer" class="link">GitHub</a>
+          </div>
+          <span>תמכו בחופש הבחירה בוורדפרס ובכלים מקומיים.</span>
+        </footer>
+      </div>
+      <div class="drawer-side z-20">
+        <label for="menu-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
+        <ul class="menu p-6 w-72 min-h-full bg-base-100 text-base-content gap-3 text-sm">
+          <li class="font-semibold text-lg">ניווט</li>
+          <li><a href="/">גלריה</a></li>
+          <li><a href="/submit">הגשת אתר</a></li>
+          <li><a href="/about">אודות</a></li>
+          <li><a href="/blog">מאמרים</a></li>
+          <li class="mt-4 font-semibold text-lg">תגיות</li>
+          <li class="flex flex-wrap gap-2">
+            {['Bricks', 'ACF', 'WooCommerce', 'JetEngine', 'GSAP'].map((tag) => (
+              <span class="badge badge-outline" aria-label={`תגית ${tag}`}>{tag}</span>
+            ))}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>

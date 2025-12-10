@@ -1,0 +1,24 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { readPosts } from '../../utils/data';
+
+const posts = await readPosts();
+---
+<BaseLayout title="מאמרים" description="מאמרים קצרים על Bricks Builder בישראל">
+  <section class="max-w-3xl space-y-4">
+    <h1 class="text-3xl font-semibold uppercase">מאמרים</h1>
+    <p class="text-sm text-gray-700">פוסטים קצרים על טכניקות, תוספים והשראה בעבודה עם Bricks.</p>
+    <div class="space-y-3">
+      {posts.map((post) => (
+        <article class="p-4 bg-base-100 border border-neutral-200 rounded-lg shadow-sm">
+          <div class="flex items-center justify-between">
+            <h2 class="text-xl font-semibold"><a class="link" href={`/blog/${post.slug}`}>{post.title}</a></h2>
+            <span class="text-xs text-gray-600">{post.date}</span>
+          </div>
+          <p class="text-sm text-gray-700 mt-2">{post.excerpt}</p>
+          <a class="link text-sm" href={`/blog/${post.slug}`}>לקריאה</a>
+        </article>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

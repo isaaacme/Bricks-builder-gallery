@@ -1,0 +1,20 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { readPosts } from '../../utils/data';
+
+export async function getStaticPaths() {
+  const posts = await readPosts();
+  return posts.map((post) => ({ params: { slug: post.slug }, props: { post } }));
+}
+
+const { post } = Astro.props;
+---
+<BaseLayout title={`${post.title} | מאמרים`} description={post.excerpt}>
+  <article class="prose prose-neutral max-w-3xl prose-invert">
+    <p class="text-xs text-gray-600 uppercase">מאמר</p>
+    <h1 class="text-4xl font-semibold">{post.title}</h1>
+    <p class="text-sm text-gray-600">{post.date}</p>
+    <p class="leading-relaxed">{post.content}</p>
+    <a class="link" href="/blog">חזרה לרשימה</a>
+  </article>
+</BaseLayout>

@@ -1,0 +1,46 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { readSites } from '../../utils/data';
+
+export async function getStaticPaths() {
+  const sites = await readSites();
+  return sites.map((site) => ({ params: { slug: site.slug }, props: { site } }));
+}
+
+const { site } = Astro.props;
+---
+<BaseLayout title={`${site.name} | Brutalist Bricks`} description={site.description}>
+  <article class="prose prose-neutral max-w-4xl prose-invert">
+    <header class="mb-6">
+      <p class="text-xs uppercase text-gray-600">ברוטליזם ישראלי</p>
+      <h1 class="text-4xl font-semibold mb-2">{site.name}</h1>
+      <p class="text-gray-700">עיצוב: {site.creator}</p>
+      <div class="flex flex-wrap gap-2 mt-3">
+        {site.tags?.map((tag) => (
+          <span class="badge badge-outline" aria-label={`תגית ${tag}`}>{tag}</span>
+        ))}
+      </div>
+    </header>
+    <div class="grid lg:grid-cols-[2fr,1fr] gap-8 items-start">
+      <div class="space-y-4 text-base leading-relaxed">
+        <p>{site.description}</p>
+        <p>
+          האתר נבחר כי הוא מדגים חופש עיצובי לצד פונקציונליות. אנחנו מאמינים שגיוון כלים בוורדפרס חיוני, ו-Bricks מאפשר בנייה זריזה
+          בלי להתפשר על חוויית משתמש.
+        </p>
+        <a class="link text-lg" href={site.url} target="_blank" rel="noreferrer">לצפייה באתר</a>
+      </div>
+      <div class="card bg-base-100 shadow-md border border-neutral-200">
+        <figure class="bg-neutral h-64 overflow-hidden">
+          <img src={site.thumbnail} alt={`תצוגת מסך של ${site.name}`} class="w-full h-full object-cover" loading="lazy" />
+        </figure>
+        <div class="card-body gap-2 text-sm">
+          <p class="font-semibold">פרטים מהירים</p>
+          <p>יוצר/ת: {site.creator}</p>
+          <p>כתובת: <a class="link" href={site.url} target="_blank">{site.url}</a></p>
+          <p>סטאק: {site.tags?.join(', ')}</p>
+        </div>
+      </div>
+    </div>
+  </article>
+</BaseLayout>
